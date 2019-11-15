@@ -21,8 +21,11 @@ kernel.bin: src/kernel/kernel_entry.o ${OBJ}
 	nasm $< -f elf -o $@
 	
 %.bin: %.asm
-	nasm $< -f bin -o $@
+	nasm $< -f bin -I $(@D) -o $@
 	
 clean:
 	rm -fr *.bin *.dis *.o os-image
 	rm -fr src/kernel/*.o src/boot/*.bin src/drivers/*.o
+	
+kernel.dis: kernel.bin
+	ndisasm -b 32 $< > $@
