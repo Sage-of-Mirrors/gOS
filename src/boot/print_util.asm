@@ -18,6 +18,19 @@ print_string:
 		popa  ; Restore register state from the stack.
 		ret   ; Return to caller.
 		
+print_newline:
+	pusha
+	mov ah, 0x0e
+	
+	mov al, 0x0d
+	int 0x10
+	
+	mov al, 0x0a
+	int 0x10
+	
+	popa
+	ret
+		
 ; Prints out a hex code.
 print_hex:
 	pusha ; Store register state to the stack.
@@ -60,3 +73,5 @@ print_hex:
 	hex_finish:
 		popa ; Restore register state from the stack.
 		ret ; Return to caller.
+		
+HEX_OUT: db "0x0000", 0
